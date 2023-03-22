@@ -1,7 +1,6 @@
 import plugin from '../../lib/plugins/plugin.js'
 import fetch from 'node-fetch'
 import puppeteer from '../../lib/puppeteer/puppeteer.js'
-import moment from "moment";
 
 let url = `https://api.t1qq.com/api/sky/gy/sc/scjlwz`;//季蜡位置
 let url2 = `https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php`//大蜡烛位置
