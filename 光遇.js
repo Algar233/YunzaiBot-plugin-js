@@ -1,6 +1,5 @@
 import plugin from '../../lib/plugins/plugin.js'
 import fetch from 'node-fetch'
-import{ segment }from 'oicq'
 import puppeteer from '../../lib/puppeteer/puppeteer.js'
 import moment from "moment";
 
