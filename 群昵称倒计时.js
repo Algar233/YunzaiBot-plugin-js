@@ -1,4 +1,3 @@
-import plugin from '../../lib/plugins/plugin.js'
 let t 
 const h = [11111,22222]   /**添加你想更改群名片的群号 */
 const n = '机器人' /**你的机器人的名字 */
