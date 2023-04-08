@@ -18,7 +18,7 @@ Genshin Impact Yunzai-Bot's personal JavaScript plugin
 
 api来自http://seiki.fun/
 
-发病文案指令后必须指定发病对象。技术菜不知道怎么检测QQ艾特，不然可以取QQ昵称作为发病对象，欢迎大佬pr
+发病文案指令后必须指定发病对象。
 
 ---
 
