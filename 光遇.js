@@ -1,6 +1,8 @@
+/*每日任务分1和2,1来源于好游快爆的网页;2来源于下面的api经常出错,例如云野任务显示禁阁的图.
+所以增加了旧版好游快爆来源,默认为1,指令后加2才为2*/
 import plugin from '../../lib/plugins/plugin.js'
 import fetch from 'node-fetch'
-import puppeteer from '../../lib/puppeteer/puppeteer.js'
+import puppeteer from 'puppeteer'
 
 let url = `https://api.t1qq.com/api/sky/gy/sc/scjlwz`;//季蜡位置
 let url2 = `https://api.t1qq.com/api/sky/gy/sc/dlz/scdlwz.php`//大蜡烛位置
@@ -8,7 +10,7 @@ let url3 = `https://api.t1qq.com/api/sky/gy/sc/scsky.php`//任务
 let url4 = `https://api.t1qq.com/api/sky/gy/sc/mf/magic`//限免魔法
 let url5 = `https://api.t1qq.com/api/sky/gytq?key=bcVIK8fjrfJzZJtvxwOJMQmLPt`//天气预报
 let url6 = `https://api.t1qq.com/api/sky/gytq?key=bcVIK8fjrfJzZJtvxwOJMQmLPt`//红石位置
-export class wenan extends plugin {
+export class sky extends plugin {
   constructor () {
     super({
       name: '光遇',
@@ -17,8 +19,12 @@ export class wenan extends plugin {
       priority: 5000,
       rule: [
         {
-          reg: '^#*(光遇)?(国服今日任务|今日任务|任务)$',
+          reg: '^#*(光遇)?(国服)?(今日|每日)?任务$',
           fnc: 'sky_jrrw'
+        },
+        {
+          reg: '^#*(光遇)?(国服)?(今日|每日)?任务2$',
+          fnc: 'sky_jrrw2'
         },
         {
           reg: '^#*(光遇)?(大蜡烛|大蜡烛位置|今日大蜡烛)$',
@@ -55,13 +61,42 @@ export class wenan extends plugin {
       ]
     })
   }
+  async browserInit() {
+    return await puppeteer.launch();
+  } 
   async sky_jrrw (e) {
+    await e.reply('正在返回图片,可能较慢', false, { at: false, recallMsg: 10 })
+	// 设置页面属性
+    const browser = await this.browserInit();
+		const page = await browser.newPage();
+		await page.setViewport({
+			width: 1280,
+			height: 1320
+		});
+  // 进入页面
+		await page.goto('https://www.onebiji.com/hykb_tools/guangyu/rwgl/index.php');
+		
+  //渲染图像
+		let buff = null
+		
+		buff = await page.screenshot({
+			clip: {
+			  x: 300,
+			  y: 1300,
+			  width: 675,
+			  height: 1800
+			}
+		});
+		page.close().catch((err) => logger.error(err));
+		browser.close().catch((err) => logger.error(err));
+	await e.reply(segment.image(buff));
+	return true;
+	}
+  async sky_jrrw2 (e) {
     //cv了https://gitee.com/Nwflower/auto-plugin/blob/master/model/autoGroupName/MonthMassage.js的月消息数代码
     await e.reply('正在返回图片,可能较慢', false, { at: false, recallMsg: 10 })
     let msg = [
-      //segment.image(url4),
       '今日任务',segment.image(url3)
-      //'&,segment.image(url)
     ]
     await this.reply(msg, true)
     }
