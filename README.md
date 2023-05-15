@@ -27,6 +27,7 @@ api来自http://seiki.fun/
 改编自Nonebot插件[nonebot_plugin_abbrreply](https://github.com/anlen123/nonebot_plugin_abbrreply)
 
 AI辅助改编有不足的地方还请指出
+
 ---
 
 # 免责声明
